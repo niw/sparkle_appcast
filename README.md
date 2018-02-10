@@ -65,7 +65,7 @@ The application archive file must contain exact one application bundle.
     Default to `"The most recent changes."`.
 
 ### `sign [OPTIONS...] [FILE_PATH]`
-    
+
 Sign data at `FILE_PATH` or reading from the standard input with `DSA_PRIVATE_KEY_PATH`
 and print signature that can be used in `appcast.xml`.
 Use this for testing private key.
@@ -89,7 +89,7 @@ Use Ruby Gems to install `sparkle_appcast`.
 
 Or use [bundler](http://bundler.io/), add next line to `Gemfile` in your project.
 
-    gem "sprkle_appcast"
+    gem "sparkle_appcast"
 
 
 SEE ALSO
