@@ -1,0 +1,26 @@
+PATH
+  remote: .
+  specs:
+    sparkle_appcast (0.1.0)
+      kramdown
+      plist
+      thor
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    kramdown (1.16.2)
+    plist (3.4.0)
+    rake (12.3.0)
+    thor (0.20.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  rake
+  sparkle_appcast!
+
+BUNDLED WITH
+   1.16.1
