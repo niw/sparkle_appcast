@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sparkle_appcast (0.1.0)
+    sparkle_appcast (0.1.1)
       kramdown
       plist
       thor
