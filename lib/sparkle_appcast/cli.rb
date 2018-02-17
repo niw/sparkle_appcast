@@ -48,6 +48,49 @@ module SparkleAppcast
       end
     end
 
+    desc "info FILE", "Print info about the application bundle."
+    Bundle::INFO_KEYS.each do |key|
+      option key, type: :boolean, desc: "Print #{key}."
+    end
+    def info(file)
+      bundle_info = if File.file?(file)
+        Archive.new(file).bundle_info
+      else
+        Bundle.new(file).info
+      end
+
+      include_keys = []
+      exclude_keys = []
+      Bundle::INFO_KEYS.each do |key|
+        case options[key]
+        when nil
+        when true
+          include_keys << key
+        when false
+          exclude_keys << key
+        end
+      end
+
+      keys = if include_keys.empty?
+        Bundle::INFO_KEYS
+      else
+        include_keys
+      end
+      keys = keys - exclude_keys
+
+      if keys.count > 1
+        info = {}
+        keys.each do |key|
+          info[key] = bundle_info[key]
+        end
+        puts info.map{|key, value| "#{key} #{value}"}.join("\n")
+      else
+        keys.each do |key|
+          puts bundle_info[key]
+        end
+      end
+    end
+
     desc "sign [FILE]", "Sign a file with a DSA private key."
     option :key, type: :string, required: true, desc: "Path to a DSA private key."
     def sign(file = nil)
