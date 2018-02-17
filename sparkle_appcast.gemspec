@@ -7,7 +7,11 @@ Gem::Specification.new do |spec|
   spec.authors = ["Yoshimasa Niwa"]
   spec.email = ["niw@niw.at"]
   spec.summary = spec.description = "Generate Sparkle appcast.xml"
-  #spec.homepage = ""
+  spec.homepage = "https://github.com/niw/sparkle_appcast"
+  spec.license = "MIT"
+  spec.metadata = {
+    "source_code_uri" => "https://github.com/niw/sparkle_appcast"
+  }
 
   spec.extra_rdoc_files = `git ls-files -z -- README* LICENSE`.split("\x0")
   executable_files = `git ls-files -z -- bin/*`.split("\x0")
