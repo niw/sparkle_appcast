@@ -27,6 +27,10 @@ to create and update `appcast.xml` for [Sparkle](https://sparkle-project.org).
 Create `appcast.xml` with an application archive at `FILE_PATH`.
 The application archive file must contain exact one application bundle.
 
+The value or content of each template-enabled key can include [Mustache](https://mustache.github.io/) style (``{{key}}``) template.
+Each template is replaced with the value with the information of application bundle.
+Use `info` command to list all possible template keys.
+
 * `--key=KEY`
 
     Path to DSA private key file. Required.
@@ -34,10 +38,12 @@ The application archive file must contain exact one application bundle.
 * `--url=URL`
 
     URL to the application archive file published. Required.
+    Template is enabled.
 
 * `--release-note=RELEASE_NOTE`
 
-    Path to a release note text file in Markdown format. Required.
+    Path to a release note text file in [Markdown](https://daringfireball.net/projects/markdown/syntax) format. Required.
+    Template is enabled on the content of text file.
 
 * `--output=OUTPUT`
 
@@ -47,7 +53,8 @@ The application archive file must contain exact one application bundle.
 * `--title=TITLE`
 
     Title for the release note. Optional.
-    Default to `"{{Bundle Name}} {Bundle Short Version String}} ({{Bundle Version}})"`.
+    Default to `{{bundle_name}} {{bundle_short_version_string}} ({{bundle_version}})`
+    Template is enabled.
 
 * `--publish-date=PUBLISH_DATE`
 
@@ -57,12 +64,20 @@ The application archive file must contain exact one application bundle.
 * `--channel-title=CHANNEL_TITLE`
 
     Title of the channel. Optional.
-    Default to `"Change log"`.
+    Default to `{{bundle_name}} Changelog`.
+    Template is enabled.
 
 * `--channel-description=CHANNEL_DESCRIPTION`
 
     Description of the channel. Optional.
-    Default to `"The most recent changes."`.
+    Default to `Most recent changes with links to updates.`.
+    Template is enabled.
+
+* `--channel-language=CHANNEL_LANGUAGE`
+
+    Language of the channel. Optional.
+    Default to `en`.
+    Template is enabled.
 
 ### `info [OPTIONS...] [FILE_PATH]`
 
