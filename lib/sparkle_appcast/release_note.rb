@@ -1,3 +1,5 @@
+require "mustache"
+
 module SparkleAppcast
   class ReleaseNote
     def self.markdown(text)
@@ -10,8 +12,8 @@ module SparkleAppcast
       @path = path
     end
 
-    def html
-      @html ||= self.class.markdown(text)
+    def html(context = {})
+      self.class.markdown(Mustache.render(text, context))
     end
 
     def text

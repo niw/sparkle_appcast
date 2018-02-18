@@ -10,25 +10,26 @@ module SparkleAppcast
     end
 
     desc "appcast FILE", "Create `appcast.xml` with an application archive file."
-    long_desc <<-END_OF_DESCRIPTION
-      Create `appcast.xml` with an application archive file.
-      The application archive file must contain exact one application bundle.
-    END_OF_DESCRIPTION
     option :key, type: :string, required: true, desc: "Path to a DSA private key."
     option :url, type: :string, required: true, desc: "URL to the application archive file published."
     option :release_note, type: :string, required: true, desc: "Path to a release note text file in Markdown format."
     option :output, type: :string, desc: "Path to an output `appcast.xml`."
-    option :title, type: :string, desc: "Title for the release note."
+    option :title, type: :string, default: "{{bundle_name}} {{bundle_short_version_string}} ({{bundle_version}})", desc: "Title for the release note."
     option :publish_date, type: :string, desc: "Publish date time in local timezone."
-    option :channel_title, type: :string, default: "Change log", desc: "Title of the channel."
-    option :channel_description, type: :string, default: "The most recent changes.", desc: "Description of the channel."
+    option :channel_title, type: :string, default: "{{bundle_name}} Changelog", desc: "Title of the channel."
+    option :channel_description, type: :string, default: "Most recent changes with links to updates.", desc: "Description of the channel."
+    option :channel_language, type: :string, default: "en", desc: "Language of the channel."
     def appcast(file)
-      params = {
-        channel_title: options[:channel_title],
-        channel_description: options[:channel_description]
-      }
-      params[:title] = options[:title] if options[:title]
-      params[:publish_date] = Time.parse(options[:publish_date]) if options[:publish_date]
+      params = {}
+      [
+        :title,
+        :publish_date,
+        :channel_title,
+        :channel_description,
+        :channel_language
+      ].each do |key|
+        params[key] = options[key] if options[key] && !options[key].empty?
+      end
 
       appcast = Appcast.new(
         Archive.new(file),

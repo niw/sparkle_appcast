@@ -50,7 +50,7 @@ module SparkleAppcast
             channel.add_element("title").add_text(params[:channel_title]) if params[:channel_title]
             channel.add_element("description").add_text(params[:channel_description]) if params[:channel_description]
             channel.add_element("link").add_text(params[:channel_link]) if params[:channel_link]
-            channel.add_element("language").add_text(params[:language]) if params[:language]
+            channel.add_element("language").add_text(params[:channel_language]) if params[:channel_language]
 
             # <item> ... </item>
             channel.add_element("item").tap do |item|

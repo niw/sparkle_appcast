@@ -1,3 +1,5 @@
+require "mustache"
+
 module SparkleAppcast
   class Appcast
     attr_reader :signer, :archive, :release_note, :url, :params
@@ -16,27 +18,50 @@ module SparkleAppcast
 
     private
 
+    PARAMS_EXCLUDED_FROM_TEMPLATE = [
+      # The template is applied already to `description` value. See `base_params`.
+      :description,
+      :dsa_signature
+    ]
+
     def rss_params
+      @rss_params ||= base_params.inject({}) do |params, (key, value)|
+        unless PARAMS_EXCLUDED_FROM_TEMPLATE.include?(key)
+          case value
+          when String
+            value = Mustache.render(value, context)
+          end
+        end
+        params[key] = value
+        params
+      end
+    end
+
+    def base_params
       {
-        channel_link: archive.bundle_info[:feed_url],
-        title: title,
-        description: release_note.html,
+        # channel
+        channel_link: "{{feed_url}}",
+
+        # item
+        description: release_note.html(context),
         publish_date: archive.created_at,
+
+        # enclosure
         url: url,
         length: archive.size,
-        version: archive.bundle_info[:bundle_version],
-        short_version_string: archive.bundle_info[:bundle_short_version_string],
-        minimum_system_version: archive.bundle_info[:minimum_system_version],
+        version: "{{bundle_version}}",
+        short_version_string: "{{bundle_short_version_string}}",
+        minimum_system_version: "{{minimum_system_version}}",
         dsa_signature: dsa_signature
       }.merge(params)
     end
 
-    def title
-      "#{archive.bundle_info[:bundle_name]} #{archive.bundle_info[:bundle_short_version_string]} (#{archive.bundle_info[:bundle_version]})"
-    end
-
     def dsa_signature
       @dsa_signature ||= signer.sign(archive.data)
+    end
+
+    def context
+      @context ||= archive.bundle_info
     end
   end
 end
