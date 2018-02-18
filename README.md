@@ -64,6 +64,13 @@ The application archive file must contain exact one application bundle.
     Description of the channel. Optional.
     Default to `"The most recent changes."`.
 
+### `info [OPTIONS...] [FILE_PATH]`
+
+Print information about the application bundle at `FILE_PATH`.
+`FILE_PATH` can be either an application archive or application bundle.
+
+Use `help info` for all possible options.
+
 ### `sign [OPTIONS...] [FILE_PATH]`
 
 Sign data at `FILE_PATH` or reading from the standard input with `DSA_PRIVATE_KEY_PATH`
