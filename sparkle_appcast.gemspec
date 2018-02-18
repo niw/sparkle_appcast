@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "thor"
   spec.add_dependency "kramdown"
+  spec.add_dependency "mustache"
   spec.add_dependency "plist"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
