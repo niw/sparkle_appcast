@@ -48,7 +48,7 @@ module SparkleAppcast
       end
     end
 
-    desc "info FILE", "Print info about the application bundle."
+    desc "info FILE", "Print information about the application bundle."
     Bundle::INFO_KEYS.each do |key|
       option key, type: :boolean, desc: "Print #{key}."
     end
@@ -63,7 +63,6 @@ module SparkleAppcast
       exclude_keys = []
       Bundle::INFO_KEYS.each do |key|
         case options[key]
-        when nil
         when true
           include_keys << key
         when false
